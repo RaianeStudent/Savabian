@@ -22,7 +22,7 @@ exports.authorizeUserOrAdmin = (req, res, next) => {
 
   try {
     const decoded = authService.verifyToken(token);
-    req.user = decoded; // Adiciona o usuário decodificado à requisição
+    req.user = decoded; 
     if (decoded.role === 'admin' || decoded.id === parseInt(req.params.id, 10)) {
       return next();
     }
