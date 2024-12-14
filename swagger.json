@@ -1,0 +1,151 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Savabien API",
+    "version": "1.0.0",
+    "description": "Documentação da API da loja Savabien."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Servidor local"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "summary": "Listar todos os usuários",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Número de itens por página (valores permitidos: 5, 10, 30).",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Número da página a ser exibida.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de usuários retornada com sucesso."
+          },
+          "403": {
+            "description": "Acesso negado. Apenas administradores podem realizar esta ação."
+          }
+        }
+      },
+      "post": {
+        "summary": "Criar um novo usuário",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "nome": {
+                    "type": "string"
+                  },
+                  "endereco": {
+                    "type": "string"
+                  },
+                  "telefone": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "DataNascimento": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                },
+                "required": ["username", "password", "nome", "endereco", "telefone", "email", "DataNascimento"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso."
+          },
+          "400": {
+            "description": "Erro de validação dos dados enviados."
+          }
+        }
+      }
+    },
+    "/users/admin": {
+      "post": {
+        "summary": "Criar um novo administrador",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "nome": {
+                    "type": "string"
+                  },
+                  "endereco": {
+                    "type": "string"
+                  },
+                  "telefone": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "DataNascimento": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                },
+                "required": ["username", "password", "nome", "endereco", "telefone", "email", "DataNascimento"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Administrador criado com sucesso."
+          },
+          "403": {
+            "description": "Acesso negado. Apenas administradores podem realizar esta ação."
+          }
+        }
+      }
+    }
+  }
+}
