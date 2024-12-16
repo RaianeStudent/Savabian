@@ -10,10 +10,7 @@ const homeRoutes = require('./routes/homeRoutes');
 const installRoutes = require('./routes/installRoutes');
 const { authorizeAdmin, authorizeUserOrAdmin } = require('./middlewares/authMiddleware');
 const errorMiddleware = require('./middlewares/errorMiddleware');
-app.use('/contact', contactRoutes);
-app.use('/', homeRoutes);
-app.use('/install', installRoutes);
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 const app = express();
 app.use(express.json());
@@ -23,6 +20,10 @@ app.use('/users', userRoutes);
 app.use('/products', productRoutes);
 app.use('/suppliers', supplierRoutes);
 app.use('/cart', cartRoutes);
+app.use('/contact', contactRoutes);
+app.use('/', homeRoutes);
+app.use('/install', installRoutes);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(errorMiddleware);
 

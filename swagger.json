@@ -146,6 +146,245 @@
           }
         }
       }
+    },
+    "/users/{id}": {
+      "put": {
+        "summary": "Atualizar os dados de um usuário",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "email": { "type": "string" },
+                  "phone": { "type": "string" },
+                  "address": { "type": "string" },
+                  "birthdate": { "type": "string", "format": "date" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dados atualizados com sucesso."
+          },
+          "404": {
+            "description": "Usuário não encontrado."
+          },
+          "403": {
+            "description": "Acesso negado. Apenas administradores ou o próprio usuário podem realizar esta ação."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Excluir um usuário",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário excluído com sucesso."
+          },
+          "404": {
+            "description": "Usuário não encontrado."
+          },
+          "403": {
+            "description": "Não é permitido excluir um administrador."
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "summary": "Realizar login de um usuário",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": ["username", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login realizado com sucesso."
+          },
+          "401": {
+            "description": "Credenciais inválidas."
+          }
+        }
+      }
+    },
+    
+    "/products": {
+      "get": {
+        "summary": "Listar todos os produtos",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Número de itens por página (valores permitidos: 5, 10, 30).",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Número da página a ser exibida.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de produtos retornada com sucesso."
+          }
+        }
+      },
+      "post": {
+        "summary": "Criar um novo produto",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "number"
+                  }
+                },
+                "required": ["name", "price"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Produto criado com sucesso."
+          }
+        }
+      }
+    },
+    "/suppliers": {
+      "get": {
+        "summary": "Listar todos os fornecedores",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Número de itens por página (valores permitidos: 5, 10, 30).",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Número da página a ser exibida.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de fornecedores retornada com sucesso."
+          }
+        }
+      },
+      "post": {
+        "summary": "Criar um novo fornecedor",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "contact": {
+                    "type": "string"
+                  }
+                },
+                "required": ["name", "contact"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Fornecedor criado com sucesso."
+          }
+        }
+      }
+    },
+    "/install": {
+      "get": {
+        "summary": "Criar o administrador padrão",
+        "responses": {
+          "201": {
+            "description": "Administrador padrão criado com sucesso."
+          },
+          "200": {
+            "description": "Administrador padrão já existe."
+          }
+        }
+      }
+    },
+    "/docs": {
+      "get": {
+        "summary": "Acessar a documentação da API",
+        "responses": {
+          "200": {
+            "description": "Documentação exibida com sucesso."
+          }
+        }
+      }
     }
   }
 }
